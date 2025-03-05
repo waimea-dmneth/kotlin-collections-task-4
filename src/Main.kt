@@ -181,7 +181,11 @@ fun main() {
  */
 fun placeMonkey(cageList: MutableList<String>, name: String): Int {
     println("+++ Putting $name into a cage")
-
+    for (i in 0..<cageList.size) { if (cageList[i] == EMPTY) {
+            cageList[i] = name
+            return i + 1
+        }
+    }
     // YOUR CODE HERE
     return -1
 }
@@ -201,7 +205,12 @@ fun placeMonkey(cageList: MutableList<String>, name: String): Int {
  */
 fun placeViolentMonkey(cageList: MutableList<String>, name: String): Int {
     println("+++ Putting $name (VIOLENT!) into a cage")
-
+    for (i in 0..<cageList.size) {
+        if (cageList[i] == EMPTY && cageList[i +- 1] == EMPTY) {
+            cageList[i] = "!$name"
+            return i + 1
+        }
+    }
     // YOUR CODE HERE
     return -1
 }
