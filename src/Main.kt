@@ -180,7 +180,7 @@ fun main() {
  * - If all cages are occupied, returns -1
  */
 fun placeMonkey(cageList: MutableList<String>, name: String): Int {
-    println("+++ Putting $name into a cage")
+    println("+++".green() + " Putting $name into a cage")
     for (i in 0..<cageList.size) {
         if (cageList[i] != EMPTY) continue
         // Check if violent to the left
@@ -210,7 +210,7 @@ fun placeMonkey(cageList: MutableList<String>, name: String): Int {
  * - If all cages are occupied, returns -1
  */
 fun placeViolentMonkey(cageList: MutableList<String>, name: String): Int {
-    println("+++ Putting $name (VIOLENT!) into a cage")
+    println("+++".green() + " Putting $name (VIOLENT!) into a cage")
     for (i in 0..<cageList.size) {
         if (cageList[i] != EMPTY) continue
         if (i > 0 && cageList[i - 1] != EMPTY) continue
@@ -249,12 +249,13 @@ fun setupCages(): MutableList<String> {
  * Put a given monkey into the specified cage number (1...MAX)
  */
 fun placeMonkeyInCage(cageList: MutableList<String>, cageNum: Int, name: String) {
+    println("+++".green() + " Putting $name into cage $cageNum")
     // Check for invalid cage number
     if (cageNum !in 1..NUMCAGES) return
     // Check for blank name
     if (name.isBlank()) return
     // Ok to go ahead and place the monkey
-    println("+++ Putting $name into cage $cageNum")
+
     cageList[cageNum - 1] = name
 }
 
@@ -269,15 +270,20 @@ fun placeMonkeyInCage(cageList: MutableList<String>, cageNum: Int, name: String)
  * +--------+--------+--------+--------+----
  */
 fun showMonkeyCages(cageList: List<String>) {
-    val divider = "+--------".repeat(cageList.size) + "+"
+    val divider = "+--------".repeat(cageList.size).yellow() + "+".yellow()
 
     println(divider)
-    for (i in 0..<cageList.size) print("| Cage ${i + 1} ")
-    println("|")
+    for (i in 0..<cageList.size) print("|".yellow() + " Cage ${i + 1} ".bgBlack())
+    println("|".yellow())
 
     println(divider)
-    for ((i, name) in cageList.withIndex()) print("| ${name.padEnd(6)} ")
-    println("|")
+    for ((i, name) in cageList.withIndex()) {
+        if (name.first() == '!')  { print("|".yellow() + " ".bgBlack() + name.padEnd(7).red().bgBlack())
+        } else if (name == EMPTY){ print("|".yellow() + " ".bgBlack() + name.padEnd(7 ).grey().bgBlack())
+        } else{ print("|".yellow() + " ".bgBlack() + name.padEnd(7).green().bgBlack() ) }
+
+    }
+    println("|".yellow())
 
     println(divider)
 }
@@ -290,6 +296,6 @@ fun clearCage(cageList: MutableList<String>, cageNum: Int) {
     // Check for invalid cage num
     if (cageNum !in 1..cageList.size) return
     // Ok to clear the cage
-    println("--- Clearing cage $cageNum")
+    println("---".red() + " Clearing cage $cageNum")
     cageList[cageNum - 1] = EMPTY
 }
