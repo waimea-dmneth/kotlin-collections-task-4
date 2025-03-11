@@ -193,6 +193,7 @@ fun placeMonkey(cageList: MutableList<String>, name: String): Int {
         return i + 1
     }
 
+    println("!!! No Room".red())
     return -1
 }
 
@@ -270,22 +271,27 @@ fun placeMonkeyInCage(cageList: MutableList<String>, cageNum: Int, name: String)
  * +--------+--------+--------+--------+----
  */
 fun showMonkeyCages(cageList: List<String>) {
-    val divider = "+--------".repeat(cageList.size).yellow() + "+".yellow()
+    val divider = "║".col(150, 75, 0 )
 
+    println("┏".yellow() + ("╴──╶╴──╶".col(150, 75, 0 ) + "┳".yellow()).repeat(cageList.size-1) + ("-──────-".col(150, 75, 0 ) + "┓".yellow()))
+    for (i in 0..<cageList.size){
+        if (cageList[i] == EMPTY)  {print(divider + " Cage ${i + 1} ".grey().bgBlack())
+        } else {
+            print(divider + " Cage ${i + 1} ".bgBlack())
+        }
+    }
     println(divider)
-    for (i in 0..<cageList.size) print("|".yellow() + " Cage ${i + 1} ".bgBlack())
-    println("|".yellow())
 
-    println(divider)
+    println("┣".yellow() + ("-──╶╴──-".col(150, 75, 0 ) + "╇".yellow()).repeat(cageList.size-1) + ("-──────-".col(150, 75, 0 ) + "┫".yellow()))
     for ((i, name) in cageList.withIndex()) {
-        if (name.first() == '!')  { print("|".yellow() + " ".bgBlack() + name.padEnd(7).red().bgBlack())
-        } else if (name == EMPTY){ print("|".yellow() + " ".bgBlack() + name.padEnd(7 ).grey().bgBlack())
-        } else{ print("|".yellow() + " ".bgBlack() + name.padEnd(7).green().bgBlack() ) }
+        if (name.first() == '!')  { print(divider + " ".bgBlack() + name.padEnd(7).red().bgBlack())
+        } else if (name == EMPTY){ print(divider + " ".bgBlack() + name.padEnd(7 ).grey().bgBlack())
+        } else{ print(divider + " ".bgBlack() + name.padEnd(7).green().bgBlack() ) }
 
     }
-    println("|".yellow())
-
     println(divider)
+
+    println("┗".yellow() + ("-──╶╴──-".col(150, 75, 0 ) + "┷".yellow()).repeat(cageList.size-1) + ("-──────-".col(150, 75, 0 ) + "┛".yellow()))
 }
 
 
